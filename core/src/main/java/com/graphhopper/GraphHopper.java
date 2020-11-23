@@ -804,12 +804,12 @@ public class GraphHopper implements GraphHopperAPI {
             if (!encodingManager.hasEncoder(profile.getVehicle())) {
                 throw new IllegalArgumentException("Unknown vehicle '" + profile.getVehicle() + "' in profile: " + profile + ". Make sure all vehicles used in 'profiles' exist in 'graph.flag_encoders'");
             }
-//            FlagEncoder encoder = encodingManager.getEncoder(profile.getVehicle());
-//            if (profile.isTurnCosts() && !encoder.supportsTurnCosts()) {
-//                throw new IllegalArgumentException("The profile '" + profile.getName() + "' was configured with " +
-//                        "'turn_costs=true', but the corresponding vehicle '" + profile.getVehicle() + "' does not support turn costs." +
-//                        "\nYou need to add `|turn_costs=true` to the vehicle in `graph.flag_encoders`");
-//            }
+            FlagEncoder encoder = encodingManager.getEncoder(profile.getVehicle());
+            if (profile.isTurnCosts() && !encoder.supportsTurnCosts()) {
+                throw new IllegalArgumentException("The profile '" + profile.getName() + "' was configured with " +
+                        "'turn_costs=true', but the corresponding vehicle '" + profile.getVehicle() + "' does not support turn costs." +
+                        "\nYou need to add `|turn_costs=true` to the vehicle in `graph.flag_encoders`");
+            }
             try {
                 createWeighting(profile, new PMap());
             } catch (IllegalArgumentException e) {
