@@ -219,8 +219,7 @@ public class MiniGraphUI2 {
                 double speed = edge.get(avSpeedEnc);
                 Color color;
                 if (speed >= 120) {
-                    // red
-                    color = speedColors[12];
+                    color = speedColors[12]; // red
                 } else if (speed >= 100) {
                     color = speedColors[10];
                 } else if (speed >= 80) {
@@ -240,7 +239,7 @@ public class MiniGraphUI2 {
                 g2.setColor(color);
                 boolean fwd = edge.get(accessEnc);
                 boolean bwd = edge.getReverse(accessEnc);
-                float width = speed > 90 ? 1f : 0.8f;
+                float width = speed > 90 ? 2 : 1;
 
                 plotWayGeometry(g2, fwd, bwd, width,
                         edge.fetchWayGeometry(FetchMode.ALL));

@@ -1002,7 +1002,7 @@ class BaseGraph implements Graph {
         }
     }
 
-    private boolean loadEdge(int edgeId, AllEdgeIterator i) {
+    private boolean loadEdge(int edgeId, EdgeIteratorStateImpl i) {
         if (edgeId >= edgeCount)
             return false;
 
@@ -1034,10 +1034,8 @@ class BaseGraph implements Graph {
         final boolean init(int edgeId, int expectedAdjNode) {
             if (!EdgeIterator.Edge.isValid(edgeId))
                 throw new IllegalArgumentException("fetching the edge requires a valid edgeId but was " + edgeId);
-            this.edgeId = edgeId;
-            edgePointer = baseGraph.toPointer(edgeId);
-            baseNode = baseGraph.getNodeA(edgePointer);
-            adjNode = baseGraph.getNodeB(edgePointer);
+
+            baseGraph.loadEdge(this.edgeId = edgeId, this);
             freshFlags = false;
 
             if (expectedAdjNode == adjNode || expectedAdjNode == Integer.MIN_VALUE) {
@@ -1059,10 +1057,8 @@ class BaseGraph implements Graph {
         final void init(int edgeKey) {
             if (edgeKey < 0)
                 throw new IllegalArgumentException("edge keys must not be negative, given: " + edgeKey);
-            this.edgeId = GHUtility.getEdgeFromEdgeKey(edgeKey);
-            edgePointer = baseGraph.toPointer(edgeId);
-            baseNode = baseGraph.getNodeA(edgePointer);
-            adjNode = baseGraph.getNodeB(edgePointer);
+            ;
+            baseGraph.loadEdge(this.edgeId = GHUtility.getEdgeFromEdgeKey(edgeKey), this);
             freshFlags = false;
 
             if (edgeKey % 2 == 0 || baseNode == adjNode) {
